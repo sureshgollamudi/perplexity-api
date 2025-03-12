@@ -1,0 +1,281 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Perplexity API",
+    "description": "The Perplexity API allows developers to integrate powerful AI models with search capabilities.\nThis API is OpenAI-compatible for easy integration with existing applications.\n",
+    "version": "1.0.0",
+    "contact": {
+      "url": "https://docs.perplexity.ai"
+    }
+  },
+  "host": "api.perplexity.ai",
+  "basePath": "/",
+  "schemes": ["https"],
+  "securityDefinitions": {
+    "BearerAuth": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "API key provided by Perplexity"
+    }
+  },
+  "security": [
+    {
+      "BearerAuth": []
+    }
+  ],
+  "paths": {
+    "/chat/completions": {
+      "post": {
+        "summary": "Generates a model's response for the given chat conversation",
+        "operationId": "createChatCompletion",
+        "tags": ["Chat"],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ChatCompletionRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "$ref": "#/definitions/ChatCompletionResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ChatCompletionRequest": {
+      "type": "object",
+      "required": ["model", "messages"],
+      "properties": {
+        "model": {
+          "type": "string",
+          "description": "ID of the model to use",
+          "enum": [
+            "sonar-deep-research",
+            "sonar-reasoning-pro",
+            "sonar-pro",
+            "sonar",
+            "r1-1776"
+          ],
+          "example": "sonar-pro"
+        },
+        "messages": {
+          "type": "array",
+          "description": "A list of messages comprising the conversation so far",
+          "items": {
+            "$ref": "#/definitions/Message"
+          },
+          "example": [
+            {
+              "role": "system",
+              "content": "Be precise and concise."
+            },
+            {
+              "role": "user",
+              "content": "How many stars are there in our galaxy?"
+            }
+          ]
+        },
+        "max_tokens": {
+          "type": "integer",
+          "description": "The maximum number of completion tokens returned by the API.\nThe number of tokens requested in max_tokens plus the number of prompt tokens sent in messages\nmust not exceed the context window token limit of model requested.\n",
+          "example": 1024
+        },
+        "temperature": {
+          "type": "number",
+          "format": "float",
+          "minimum": 0,
+          "maximum": 2,
+          "description": "Sampling temperature to use, between 0 and 2.",
+          "default": 1,
+          "example": 0.7
+        },
+        "top_p": {
+          "type": "number",
+          "format": "float",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Nucleus sampling probability.",
+          "default": 1,
+          "example": 0.9
+        },
+        "stream": {
+          "type": "boolean",
+          "description": "If set, partial message deltas will be sent as server-sent events.",
+          "default": false,
+          "example": false
+        },
+        "response_format": {
+          "type": "object",
+          "description": "Specifies the format that the model must output (e.g. JSON schema or regex).",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": ["json_schema", "regex"],
+              "example": "json_schema"
+            },
+            "json_schema": {
+              "type": "object",
+              "description": "A valid JSON schema object (when type is json_schema)."
+            },
+            "regex": {
+              "type": "object",
+              "description": "A regex pattern object (when type is regex)."
+            }
+          }
+        }
+      }
+    },
+    "Message": {
+      "type": "object",
+      "required": ["role", "content"],
+      "properties": {
+        "role": {
+          "type": "string",
+          "description": "Role of the message author",
+          "enum": ["system", "user", "assistant"],
+          "example": "user"
+        },
+        "content": {
+          "type": "string",
+          "description": "Content of the message",
+          "example": "How many stars are there in our galaxy?"
+        }
+      }
+    },
+    "ChatCompletionResponse": {
+      "type": "object",
+      "required": ["id", "object", "created", "model", "choices", "usage"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the chat completion",
+          "example": "chatcmpl-123456789"
+        },
+        "object": {
+          "type": "string",
+          "description": "The object type, always 'chat.completion'",
+          "example": "chat.completion"
+        },
+        "created": {
+          "type": "integer",
+          "description": "Unix timestamp (in seconds) of creation",
+          "example": 1677858242
+        },
+        "model": {
+          "type": "string",
+          "description": "The model used for the chat completion",
+          "example": "sonar-pro"
+        },
+        "choices": {
+          "type": "array",
+          "description": "List of chat completion choices. Can be more than one if n>1 is specified",
+          "items": {
+            "type": "object",
+            "required": ["message", "index", "finish_reason"],
+            "properties": {
+              "message": {
+                "$ref": "#/definitions/Message"
+              },
+              "index": {
+                "type": "integer",
+                "description": "Index of the choice",
+                "example": 0
+              },
+              "finish_reason": {
+                "type": "string",
+                "description": "Reason the model stopped generating tokens (stop, length, or content_filter).",
+                "enum": ["stop", "length", "content_filter"],
+                "example": "stop"
+              }
+            }
+          }
+        },
+        "usage": {
+          "type": "object",
+          "description": "Usage statistics for the completion request",
+          "required": ["prompt_tokens", "completion_tokens", "total_tokens"],
+          "properties": {
+            "prompt_tokens": {
+              "type": "integer",
+              "description": "Number of tokens in the prompt",
+              "example": 56
+            },
+            "completion_tokens": {
+              "type": "integer",
+              "description": "Number of tokens in the completion",
+              "example": 31
+            },
+            "total_tokens": {
+              "type": "integer",
+              "description": "Total number of tokens used",
+              "example": 87
+            }
+          }
+        }
+      }
+    },
+    "ErrorResponse": {
+      "type": "object",
+      "required": ["error"],
+      "properties": {
+        "error": {
+          "type": "object",
+          "required": ["message", "type", "code"],
+          "properties": {
+            "message": {
+              "type": "string",
+              "description": "Human-readable error message",
+              "example": "You exceeded your current quota, please check your plan and billing details."
+            },
+            "type": {
+              "type": "string",
+              "description": "Type of error returned",
+              "example": "insufficient_quota"
+            },
+            "code": {
+              "type": "string",
+              "description": "Machine-readable error code",
+              "example": "quota_exceeded"
+            }
+          }
+        }
+      }
+    }
+  }
+}
