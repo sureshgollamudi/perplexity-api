@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Demo — Maintenance: AIOps RCA + Patch</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Space+Grotesk:wght@500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            display: flex;
+            flex-direction: column;
+            background-color: #ffffff;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        /* Header */
+        .header {
+            background-color: #0f172a;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            padding: 0 40px;
+            position: relative;
+            z-index: 10;
+        }
+        .demo-badge {
+            background-color: #ef4444; /* Red for Critical/Maintenance */
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-right: 16px;
+        }
+
+        /* Main Content Layout */
+        .content-wrapper {
+            flex: 1;
+            display: flex;
+            padding: 32px 40px;
+            gap: 32px;
+            background-color: #f8fafc;
+            position: relative;
+        }
+        
+        /* Left Column: Scenario & Steps */
+        .process-column {
+            flex: 3;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        
+        /* Right Column: Artifacts, Tools, Success */
+        .details-column {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* Card Styles */
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            padding: 24px;
+            border: 1px solid #e2e8f0;
+        }
+
+        /* Scenario Box */
+        .scenario-box {
+            background-color: #fff1f2; /* Light red bg */
+            border-left: 4px solid #ef4444; /* Red border */
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        /* Steps List */
+        .step-item {
+            display: flex;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .step-item:last-child {
+            margin-bottom: 0;
+        }
+        .step-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 40px;
+            bottom: -10px;
+            width: 2px;
+            background-color: #e2e8f0;
+            z-index: 0;
+        }
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #ef4444; /* Red theme */
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+            margin-right: 20px;
+            z-index: 1;
+            box-shadow: 0 2px 4px rgba(239, 68, 68, 0.3);
+        }
+        .step-content {
+            background-color: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 16px;
+            flex: 1;
+        }
+
+        /* Tech Tags */
+        .tech-tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 10px;
+            background-color: #f1f5f9;
+            color: #475569;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .tech-tag i {
+            margin-right: 6px;
+            font-size: 0.9rem;
+        }
+
+        /* Artifact File Item */
+        .file-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: #334155;
+        }
+        .file-icon {
+            color: #64748b;
+            margin-right: 10px;
+        }
+
+        /* Success Criteria Checkbox */
+        .success-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+        .check-circle {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #dcfce7;
+            color: #166534;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            margin-right: 10px;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="slide-container">
+<!-- Header -->
+<div class="header">
+<span class="demo-badge">LIVE DEMO</span>
+<h1 class="text-white text-3xl font-bold font-heading tracking-wide">
+                Maintenance: AIOps RCA + Patch
+            </h1>
+<div class="ml-auto text-slate-400 text-sm font-medium flex items-center">
+<i class="fa-solid fa-laptop-medical mr-2"></i>
+<span>Step-by-Step Recipe</span>
+</div>
+</div>
+<div class="content-wrapper">
+<!-- Left Column: Process -->
+<div class="process-column z-10">
+<!-- Scenario Section -->
+<div class="card">
+<h2 class="text-lg font-bold text-slate-800 font-heading mb-3 flex items-center">
+<i class="fa-solid fa-triangle-exclamation text-red-500 mr-2"></i> Scenario
+                    </h2>
+<div class="scenario-box">
+<p class="text-slate-800 font-medium">Alert: Spike in 500 errors after "Saved Searches" toggle ON</p>
+<p class="text-slate-600 text-sm mt-1">Goal: Identify root cause, deploy a fix, and restore service health immediately using AIOps agent.</p>
+</div>
+</div>
+<!-- Execution Steps -->
+<div class="card flex-1">
+<h2 class="text-lg font-bold text-slate-800 font-heading mb-6 flex items-center">
+<i class="fa-solid fa-list-ol text-red-500 mr-2"></i> Execution Steps
+                    </h2>
+<div class="step-item">
+<div class="step-number">1</div>
+<div class="step-content shadow-sm">
+<p class="font-bold text-slate-800 mb-1">Analysis &amp; Correlation</p>
+<p class="text-slate-600 text-sm mb-2">AI correlates deployment event with logs/traces via MCP.</p>
+<p class="text-slate-500 text-xs italic">"Suspect N+1 query pattern in SearchService identified."</p>
+</div>
+</div>
+<div class="step-item">
+<div class="step-number">2</div>
+<div class="step-content shadow-sm">
+<p class="font-bold text-slate-800 mb-1">Reproduction &amp; Verification</p>
+<p class="text-slate-600 text-sm mb-2">Generates targeted load test to reproduce the issue.</p>
+<p class="text-slate-500 text-xs italic">Confirms DB CPU spike matches the incident signature.</p>
+</div>
+</div>
+<div class="step-item">
+<div class="step-number">3</div>
+<div class="step-content shadow-sm">
+<p class="font-bold text-slate-800 mb-1">Auto-Fix &amp; Patch</p>
+<p class="text-slate-600 text-sm mb-2">Suggests DB index + code patch; opens PR with tests &amp; spec note.</p>
+<p class="text-slate-500 text-xs italic">Drafts RCA.md and updates maintenance tasks.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Details -->
+<div class="details-column z-10">
+<!-- Artifacts Produced -->
+<div class="card">
+<h2 class="text-lg font-bold text-slate-800 font-heading mb-4 flex items-center">
+<i class="fa-solid fa-file-contract text-orange-500 mr-2"></i> Artifacts Produced
+                    </h2>
+<div class="file-item">
+<i class="fa-brands fa-markdown file-icon text-slate-500"></i>
+<p>RCA.md <span class="text-slate-400 text-xs ml-2">(Postmortem draft)</span></p>
+</div>
+<div class="file-item">
+<i class="fa-solid fa-code-pull-request file-icon text-purple-500"></i>
+<p>fix/db-perf-patch <span class="text-slate-400 text-xs ml-2">(Pull Request)</span></p>
+</div>
+<div class="file-item">
+<i class="fa-solid fa-list-check file-icon text-blue-500"></i>
+<p>tasks.md <span class="text-slate-400 text-xs ml-2">(Updated spec)</span></p>
+</div>
+</div>
+<!-- Tools Used -->
+<div class="card">
+<h2 class="text-lg font-bold text-slate-800 font-heading mb-4 flex items-center">
+<i class="fa-solid fa-screwdriver-wrench text-indigo-500 mr-2"></i> Tools Stack
+                    </h2>
+<div class="flex flex-wrap">
+<div class="tech-tag border border-purple-100">
+<i class="fa-solid fa-chart-line text-purple-500"></i> New Relic / Datadog
+                        </div>
+<div class="tech-tag border border-indigo-100">
+<i class="fa-solid fa-robot text-indigo-500"></i> Copilot Assistant
+                        </div>
+<div class="tech-tag border border-blue-100">
+<i class="fa-solid fa-network-wired text-blue-500"></i> MCP (Logs, Traces)
+                        </div>
+<div class="tech-tag border border-slate-200">
+<i class="fa-brands fa-jira text-blue-600"></i> Jira
+                        </div>
+</div>
+</div>
+<!-- Success Criteria -->
+<div class="card flex-1 bg-green-50 border-green-100">
+<h2 class="text-lg font-bold text-green-800 font-heading mb-4 flex items-center">
+<i class="fa-solid fa-flag-checkered text-green-600 mr-2"></i> Success Criteria
+                    </h2>
+<div class="success-item">
+<div class="check-circle"><i class="fa-solid fa-check"></i></div>
+<p class="text-sm text-green-800">MTTR &lt; 1 hour</p>
+</div>
+<div class="success-item">
+<div class="check-circle"><i class="fa-solid fa-check"></i></div>
+<p class="text-sm text-green-800">Postmortem published automatically</p>
+</div>
+<div class="success-item">
+<div class="check-circle"><i class="fa-solid fa-check"></i></div>
+<p class="text-sm text-green-800">Fix verified in staging via load test</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

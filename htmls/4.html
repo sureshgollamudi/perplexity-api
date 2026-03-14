@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Design &amp; Architecture - Phase Detail</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Space+Grotesk:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            display: flex;
+            flex-direction: column;
+            background-color: #ffffff;
+            overflow: hidden;
+            position: relative;
+        }
+        /* Header */
+        .header {
+            background-color: #0f172a;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            padding: 0 40px;
+            position: relative;
+            z-index: 10;
+        }
+        .phase-badge {
+            background-color: #3b82f6;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-right: 16px;
+        }
+        
+        /* Grid Layout */
+        .content-grid {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 24px;
+            padding: 32px 40px;
+            background-color: #f1f5f9;
+        }
+        
+        /* Quadrant Cards */
+        .quadrant-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border-top: 4px solid transparent;
+            height: 100%;
+        }
+        
+        /* Card Headers */
+        .card-header {
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .header-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-size: 1rem;
+        }
+        
+        /* Card Content */
+        .card-content {
+            padding: 20px 24px;
+            flex: 1;
+        }
+        .list-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            color: #475569;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        .list-bullet {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            margin-top: 8px;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        
+        /* Specific Styles for Each Quadrant */
+        /* Use Cases - Blue */
+        .q-use-cases { border-top-color: #3b82f6; }
+        .q-use-cases .header-icon { background-color: #eff6ff; color: #2563eb; }
+        .q-use-cases .list-bullet { background-color: #3b82f6; }
+        
+        /* Tools - Purple */
+        .q-tools { border-top-color: #8b5cf6; }
+        .q-tools .header-icon { background-color: #f5f3ff; color: #7c3aed; }
+        .q-tools .list-bullet { background-color: #8b5cf6; }
+        .tool-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            background-color: #f5f3ff;
+            color: #6d28d9;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            border: 1px solid #ddd6fe;
+        }
+        
+        /* Outcomes - Green */
+        .q-outcomes { border-top-color: #10b981; }
+        .q-outcomes .header-icon { background-color: #ecfdf5; color: #059669; }
+        .q-outcomes .list-bullet { background-color: #10b981; }
+        
+        /* Challenges - Amber */
+        .q-challenges { border-top-color: #f59e0b; }
+        .q-challenges .header-icon { background-color: #fffbeb; color: #d97706; }
+        .q-challenges .list-bullet { background-color: #f59e0b; }
+
+        /* Background Pattern */
+        .bg-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            /* Placeholder for pattern/image if needed, kept minimal as per style guide */
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.05;
+            background-image: url('data:image/svg+xml;utf8,<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><circle cx="2" cy="2" r="1" fill="%233b82f6"/></svg>');
+        }
+    </style>
+</head>
+<body>
+<div class="slide-container">
+<!-- Header -->
+<div class="header">
+<span class="phase-badge">Phase 2</span>
+<h1 class="text-white text-3xl font-bold font-heading tracking-wide">
+                Design &amp; Architecture
+            </h1>
+<div class="ml-auto text-slate-400 text-sm font-medium flex items-center">
+<i class="fa-solid fa-layer-group mr-2"></i>
+<span>SDLC Phase Detail</span>
+</div>
+</div>
+<!-- Main Content Grid -->
+<div class="content-grid relative">
+<div class="bg-pattern"></div>
+<!-- Quadrant 1: Use Cases -->
+<div class="quadrant-card q-use-cases z-10">
+<div class="card-header">
+<div class="header-icon">
+<i class="fa-solid fa-list-check"></i>
+</div>
+<h2 class="text-xl font-bold text-slate-800 font-heading">Use Cases</h2>
+</div>
+<div class="card-content">
+<div class="list-item">
+<div class="list-bullet"></div>
+<p>Generate candidate architectures, sequence diagrams, and class diagrams from requirements.</p>
+</div>
+<div class="list-item">
+<div class="list-bullet"></div>
+<p>Propose optimized data models, API contracts (OpenAPI/Swagger), and infra-as-code drafts.</p>
+</div>
+<div class="list-item">
+<div class="list-bullet"></div>
+<p>Evaluate trade-offs between different architectural patterns (e.g., microservices vs. monolith).</p>
+</div>
+</div>
+</div>
+<!-- Quadrant 2: Tools Used -->
+<div class="quadrant-card q-tools z-10">
+<div class="card-header">
+<div class="header-icon">
+<i class="fa-solid fa-screwdriver-wrench"></i>
+</div>
+<h2 class="text-xl font-bold text-slate-800 font-heading">Tools Used</h2>
+</div>
+<div class="card-content">
+<div class="mb-4">
+<p class="text-sm text-slate-500 font-semibold mb-2 uppercase tracking-wide">Diagramming &amp; Modeling</p>
+<div class="flex flex-wrap">
+<span class="tool-badge">Figma AI</span>
+<span class="tool-badge">Miro AI</span>
+<span class="tool-badge">PlantUML / Mermaid</span>
+</div>
+</div>
+<div class="mb-4">
+<p class="text-sm text-slate-500 font-semibold mb-2 uppercase tracking-wide">Governance &amp; Rules</p>
+<div class="flex flex-wrap">
+<span class="tool-badge">Amazon Q Developer Rules</span>
+<span class="tool-badge">Constitution Files</span>
+</div>
+</div>
+<div>
+<p class="text-sm text-slate-500 font-semibold mb-2 uppercase tracking-wide">Context Access</p>
+<div class="flex flex-wrap">
+<span class="tool-badge">MCP (ADR Repo, Confluence)</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Quadrant 3: Outcomes -->
+<div class="quadrant-card q-outcomes z-10">
+<div class="card-header">
+<div class="header-icon">
+<i class="fa-solid fa-chart-line"></i>
+</div>
+<h2 class="text-xl font-bold text-slate-800 font-heading">Key Outcomes</h2>
+</div>
+<div class="card-content">
+<div class="list-item">
+<div class="list-bullet"></div>
+<p><strong>Rapid Iteration:</strong> Explore multiple architectural options in the time it usually takes to draft one.</p>
+</div>
+<div class="list-item">
+<div class="list-bullet"></div>
+<p><strong>Consistency:</strong> Enforce standard design patterns and security guardrails automatically.</p>
+</div>
+<div class="list-item">
+<div class="list-bullet"></div>
+<p><strong>Earlier Visibility:</strong> Identify technical debt and integration challenges before a single line of code is written.</p>
+</div>
+</div>
+</div>
+<!-- Quadrant 4: Challenges & Constraints -->
+<div class="quadrant-card q-challenges z-10">
+<div class="card-header">
+<div class="header-icon">
+<i class="fa-solid fa-triangle-exclamation"></i>
+</div>
+<h2 class="text-xl font-bold text-slate-800 font-heading">Challenges &amp; Constraints</h2>
+</div>
+<div class="card-content">
+<div class="list-item">
+<div class="list-bullet"></div>
+<p><strong>Over-Specification:</strong> Risk of designing too much detail upfront vs. maintaining agility.</p>
+</div>
+<div class="list-item">
+<div class="list-bullet"></div>
+<p><strong>Tech Overreach:</strong> AI may suggest complex solutions (e.g., Kubernetes) when simple ones suffice.</p>
+</div>
+<div class="list-item">
+<div class="list-bullet"></div>
+<p><strong>Separation of Concerns:</strong> Ensuring functional specs remain distinct from technical implementation details.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

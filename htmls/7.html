@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Deployment - Phase Detail</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Space+Grotesk:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            display: flex;
+            flex-direction: column;
+            background-color: #ffffff;
+            overflow: hidden;
+            position: relative;
+        }
+        /* Header */
+        .header {
+            background-color: #0f172a;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            padding: 0 40px;
+            position: relative;
+            z-index: 10;
+        }
+        .phase-badge {
+            background-color: #3b82f6;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-right: 16px;
+        }
+        
+        /* Grid Layout */
+        .content-grid {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 24px;
+            padding: 32px 40px;
+            background-color: #f1f5f9;
+        }
+        
+        /* Quadrant Cards */
+        .quadrant-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border-top: 4px solid transparent;
+            height: 100%;
+        }
+        
+        /* Card Headers */
+        .card-header {
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .header-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-size: 1rem;
+        }
+        
+        /* Card Content */
+        .card-content {
+            padding: 20px 24px;
+            flex: 1;
+        }
+        .list-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            color: #475569;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        .list-bullet {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            margin-top: 8px;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        
+        /* Specific Styles for Each Quadrant */
+        /* Use Cases - Blue */
+        .q-use-cases { border-top-color: #3b82f6; }
+        .q-use-cases .header-icon { background-color: #eff6ff; color: #2563eb; }
+        .q-use-cases .list-bullet { background-color: #3b82f6; }
+        
+        /* Tools - Purple */
+        .q-tools { border-top-color: #8b5cf6; }
+        .q-tools .header-icon { background-color: #f5f3ff; color: #7c3aed; }
+        .q-tools .list-bullet { background-color: #8b5cf6; }
+        .tool-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            background-color: #f5f3ff;
+            color: #6d28d9;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            border: 1px solid #ddd6fe;
+        }
+        
+        /* Outcomes - Green */
+        .q-outcomes { border-top-color: #10b981; }
+        .q-outcomes .header-icon { background-color: #ecfdf5; color: #059669; }
+        .q-outcomes .list-bullet { background-color: #10b981; }
+        
+        /* Challenges - Amber */
+        .q-challenges { border-top-color: #f59e0b; }
+        .q-challenges .header-icon { background-color: #fffbeb; color: #d97706; }
+        .q-challenges .list-bullet { background-color: #f59e0b; }
+
+    </style>
+</head>
+<body>
+<div class="slide-container">
+<!-- Header -->
+<div class="header">
+<span class="phase-badge">Phase 5</span>
+<h1 class="text-white text-3xl font-bold font-heading tracking-wide">
+                Deployment &amp; Release
+            </h1>
+<div class="ml-auto text-slate-400 text-sm font-medium flex items-center">
+<i class="fa-solid fa-rocket mr-2"></i>
+<span>SDLC Phase Detail</span>
+</div>
+</div>
+<!-- Main Content Grid -->
+<div class="content-grid relative">
+<!-- Quadrant 1: Use Cases -->
+<div class="quadrant-card q-use-cases z-10">
+<div class="card-header">
+<div class="header-icon">
+<i class="fa-solid fa-list-check"></i>
+</div>
+<h2 class="text-xl font-bold text-slate-800 font-heading">Use Cases</h2>
+</div>
+<div class="card-content">
+<div class="list-item">
+<div class="list-bullet"></div>
+<p><strong>Intelligent Test Selection:</strong> AI predicts and executes only the tests impacted by code changes to accelerate pipelines.</p>
+</div>
+<div class="list-item">
+<div class="list-bullet"></div>
+<p><strong>Risk Scoring:</strong> Automated analysis of changelogs and metrics to assign risk scores to release candidates.</p>
+</div>
+<div class="list-item">
+<div class="list-bullet"></div>
+<p><strong>Automated Canary Analysis:</strong> Real-time evaluation of canary deployment metrics to drive progressive delivery.</p>
+</div>
+</div>
+</div>
+<!-- Quadrant 2: Tools Used -->
+<div class="quadrant-card q-tools z-10">
+<div class="card-header">
+<div class="header-icon">
+<i class="fa-solid fa-screwdriver-wrench"></i>
+</div>
+<h2 class="text-xl font-bold text-slate-800 font-heading">Tools Used</h2>
+</div>
+<div class="card-content">
+<div class="mb-4">
+<p class="text-sm text-slate-500 font-semibold mb-2 uppercase tracking-wide">CI/CD &amp; Orchestration</p>
+<div class="flex flex-wrap">
+<span class="tool-badge">GitHub Actions</span>
+<span class="tool-badge">GitLab CI</span>
+<span class="tool-badge">Harness</span>
+<span class="tool-badge">Argo Rollouts</span>
+</div>
+</div>
+<div class="mb-4">
+<p class="text-sm text-slate-500 font-semibold mb-2 uppercase tracking-wide">AI Analysis &amp; Context</p>
+<div class="flex flex-wrap">
+<span class="tool-badge">LLM Risk Analyzers</span>
+<span class="tool-badge">MCP (Metrics, Logs)</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Quadrant 3: Outcomes -->
+<div class="quadrant-card q-outcomes z-10">
+<div class="card-header">
+<div class="header-icon">
+<i class="fa-solid fa-chart-line"></i>
+</div>
+<h2 class="text-xl font-bold text-slate-800 font-heading">Key Outcomes</h2>
+</div>
+<div class="card-content">
+<div class="list-item">
+<div class="list-bullet"></div>
+<p><strong>Higher Deployment Frequency:</strong> Accelerated release cycles with reduced manual verification steps.</p>
+</div>
+<div class="list-item">
+<div class="list-bullet"></div>
+<p><strong>Safer Rollouts:</strong> Automated guardrails ensure bad code is stopped before reaching 100% traffic.</p>
+</div>
+<div class="list-item">
+<div class="list-bullet"></div>
+<p><strong>Faster Rollback Decisions:</strong> Instant reaction to negative signals via automated analysis.</p>
+</div>
+</div>
+</div>
+<!-- Quadrant 4: Challenges & Constraints -->
+<div class="quadrant-card q-challenges z-10">
+<div class="card-header">
+<div class="header-icon">
+<i class="fa-solid fa-triangle-exclamation"></i>
+</div>
+<h2 class="text-xl font-bold text-slate-800 font-heading">Challenges &amp; Constraints</h2>
+</div>
+<div class="card-content">
+<div class="list-item">
+<div class="list-bullet"></div>
+<p><strong>Signal Quality:</strong> "Garbage in, garbage out" — noisy observability data can lead to false positives.</p>
+</div>
+<div class="list-item">
+<div class="list-bullet"></div>
+<p><strong>Compliance:</strong> Maintaining separation of duties and approval gates while automating decisions.</p>
+</div>
+<div class="list-item">
+<div class="list-bullet"></div>
+<p><strong>Trust:</strong> Building team confidence in AI-driven rollback and promotion actions.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

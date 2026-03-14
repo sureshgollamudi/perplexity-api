@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Integration Architecture - IDE, MCP, and Spec-Driven Workflow</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Space+Grotesk:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            display: flex;
+            flex-direction: column;
+            background-color: #ffffff;
+            overflow: hidden;
+            position: relative;
+        }
+        .header-bg {
+            background-color: #0f172a;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            padding: 0 40px;
+        }
+        .content-area {
+            flex: 1;
+            display: flex;
+            margin-top: 80px; /* Offset for header */
+            height: calc(720px - 80px);
+        }
+        .diagram-container {
+            flex: 2; /* Increased width for diagram */
+            background-color: #f1f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            border-right: 1px solid #e2e8f0;
+            position: relative;
+        }
+        .notes-panel {
+            flex: 1;
+            padding: 30px;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow-y: auto;
+        }
+        .diagram-img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 8px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            object-fit: contain;
+        }
+        .component-card {
+            background-color: #f8fafc;
+            border-left: 4px solid #3b82f6;
+            padding: 10px 14px;
+            margin-bottom: 10px;
+            border-radius: 0 4px 4px 0;
+        }
+        .flow-step {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 8px;
+            font-size: 0.8rem;
+            color: #475569;
+        }
+        .flow-step-number {
+            background-color: #e2e8f0;
+            color: #475569;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+            font-weight: bold;
+            margin-right: 8px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .badge-dev { background-color: #dbeafe; color: #1e40af; }
+        .badge-mcp { background-color: #ede9fe; color: #5b21b6; }
+        .badge-tool { background-color: #dcfce7; color: #166534; }
+        
+        /* Simple background pattern without gradient */
+        .grid-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #f1f5f9;
+            background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23cbd5e1' fill-opacity='0.4' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='1'/%3E%3C/g%3E%3C/svg%3E");
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="slide-container">
+<!-- Header -->
+<div class="header-bg">
+<h1 class="text-white text-2xl font-bold font-heading tracking-wide">
+                Integration Architecture <span class="text-blue-400 font-normal mx-2">|</span> Cursor IDE + MCP Workflow
+            </h1>
+</div>
+<div class="content-area">
+<!-- Left: Diagram Area -->
+<div class="diagram-container">
+<div class="grid-pattern"></div>
+<div class="relative z-10 w-full h-full flex items-center justify-center p-4">
+<!-- Added timestamp to bypass cache -->
+<img alt="Cursor IDE, MCP and Spec-Driven Architecture Diagram" class="diagram-img" src="https://www.genspark.ai/api/files/s/uvFCXYIU?cache_control=3600&amp;t=refresh_v2"/>
+<!-- Floating Labels -->
+<div class="absolute top-6 left-6 bg-white px-3 py-1 rounded shadow-sm border border-slate-200 text-xs font-semibold text-slate-500">
+<p>End-to-End Flow</p>
+</div>
+</div>
+</div>
+<!-- Right: Explanatory Notes -->
+<div class="notes-panel">
+<div class="mb-4">
+<h3 class="text-base font-bold text-slate-800 mb-2 border-b border-slate-200 pb-1">Key Components</h3>
+<div class="component-card">
+<div class="flex justify-between items-center mb-1">
+<p class="font-bold text-slate-700 text-sm">Developer &amp; IDE</p>
+<span class="badge badge-dev">Source</span>
+</div>
+<p class="text-xs text-slate-500 leading-relaxed">
+                            Developer invokes integration commands (init, plan, push) within Cursor Command Layer to trigger workflows.
+                        </p>
+</div>
+<div class="component-card" style="border-left-color: #8b5cf6;">
+<div class="flex justify-between items-center mb-1">
+<p class="font-bold text-slate-700 text-sm">MCP Server Hub</p>
+<span class="badge badge-mcp">Bridge</span>
+</div>
+<p class="text-xs text-slate-500 leading-relaxed">
+                            Central routing layer that translates IDE intents into specific protocol calls for external tools.
+                        </p>
+</div>
+<div class="component-card" style="border-left-color: #10b981;">
+<div class="flex justify-between items-center mb-1">
+<p class="font-bold text-slate-700 text-sm">Tool Ecosystem</p>
+<span class="badge badge-tool">Targets</span>
+</div>
+<p class="text-xs text-slate-500 leading-relaxed">
+<strong>Spec Kit:</strong> Manages templates/rules. <br/>
+<strong>Jira/Confluence:</strong> Syncs tickets &amp; docs. <br/>
+<strong>Figma:</strong> Fetches design context.
+                        </p>
+</div>
+</div>
+<div>
+<h3 class="text-base font-bold text-slate-800 mb-2 border-b border-slate-200 pb-1">Data Flow Sequence</h3>
+<div class="space-y-1">
+<div class="flow-step">
+<div class="flow-step-number">1</div>
+<p><strong>Invoke:</strong> Developer runs integration command</p>
+</div>
+<div class="flow-step">
+<div class="flow-step-number">2</div>
+<p><strong>Process:</strong> Cursor Command Layer processes intent</p>
+</div>
+<div class="flow-step">
+<div class="flow-step-number">3</div>
+<p><strong>Call MCP:</strong> Request sent to MCP Servers</p>
+</div>
+<div class="flow-step">
+<div class="flow-step-number">4</div>
+<p><strong>Connect:</strong> MCP reads/writes to Spec Kit, Jira, Confluence, Figma</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

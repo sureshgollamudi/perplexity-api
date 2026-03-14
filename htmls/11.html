@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Demo — Development with Spec-Driven Loop</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Space+Grotesk:wght@500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            display: flex;
+            flex-direction: column;
+            background-color: #ffffff;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        /* Header */
+        .header {
+            background-color: #0f172a;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            padding: 0 40px;
+            position: relative;
+            z-index: 10;
+        }
+        .demo-badge {
+            background-color: #f59e0b; /* Amber for Development */
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-right: 16px;
+        }
+
+        /* Main Content Layout */
+        .content-wrapper {
+            flex: 1;
+            display: flex;
+            padding: 32px 40px;
+            gap: 32px;
+            background-color: #f8fafc;
+            position: relative;
+        }
+        
+        /* Left Column: Scenario & Steps */
+        .process-column {
+            flex: 3;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        
+        /* Right Column: Artifacts, Tools, Success */
+        .details-column {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* Card Styles */
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            padding: 24px;
+            border: 1px solid #e2e8f0;
+        }
+
+        /* Scenario Box */
+        .scenario-box {
+            background-color: #fffbeb; /* Amber tint */
+            border-left: 4px solid #f59e0b;
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        /* Steps List */
+        .step-item {
+            display: flex;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .step-item:last-child {
+            margin-bottom: 0;
+        }
+        .step-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 40px;
+            bottom: -10px;
+            width: 2px;
+            background-color: #e2e8f0;
+            z-index: 0;
+        }
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #f59e0b; /* Amber */
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+            margin-right: 20px;
+            z-index: 1;
+            box-shadow: 0 2px 4px rgba(245, 158, 11, 0.3);
+        }
+        .step-content {
+            background-color: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 16px;
+            flex: 1;
+        }
+
+        /* Tech Tags */
+        .tech-tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 10px;
+            background-color: #f1f5f9;
+            color: #475569;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .tech-tag i {
+            margin-right: 6px;
+            font-size: 0.9rem;
+        }
+
+        /* Artifact File Item */
+        .file-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: #334155;
+        }
+        .file-icon {
+            color: #64748b;
+            margin-right: 10px;
+        }
+
+        /* Success Criteria Checkbox */
+        .success-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+        .check-circle {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #dcfce7;
+            color: #166534;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            margin-right: 10px;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        /* Background Pattern */
+        .bg-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(rgba(245, 158, 11, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(245, 158, 11, 0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+            z-index: 0;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+<div class="slide-container">
+<!-- Header -->
+<div class="header">
+<span class="demo-badge">LIVE DEMO</span>
+<h1 class="text-white text-3xl font-bold font-heading tracking-wide">
+                Development: Spec-Driven Coding Loop
+            </h1>
+<div class="ml-auto text-slate-400 text-sm font-medium flex items-center">
+<i class="fa-solid fa-code mr-2"></i>
+<span>Step-by-Step Recipe</span>
+</div>
+</div>
+<div class="content-wrapper">
+<div class="bg-grid"></div>
+<!-- Left Column: Process -->
+<div class="process-column z-10">
+<!-- Scenario Section -->
+<div class="card">
+<h2 class="text-lg font-bold text-slate-800 font-heading mb-3 flex items-center">
+<i class="fa-solid fa-bullseye text-amber-500 mr-2"></i> Scenario
+                    </h2>
+<div class="scenario-box">
+<p class="text-slate-700 font-medium">Goal: Implement "Saved Searches" Service Layer &amp; Endpoints</p>
+<p class="text-slate-500 text-sm mt-1">Context: Using the approved Spec and API design to generate production-ready code, unit tests, and observability hooks in a single flow.</p>
+</div>
+</div>
+<!-- Execution Steps -->
+<div class="card flex-1">
+<h2 class="text-lg font-bold text-slate-800 font-heading mb-6 flex items-center">
+<i class="fa-solid fa-list-ol text-amber-500 mr-2"></i> Execution Steps
+                    </h2>
+<div class="step-item">
+<div class="step-number">1</div>
+<div class="step-content shadow-sm">
+<p class="font-bold text-slate-800 mb-1">Generate Scaffolds &amp; Tests</p>
+<p class="text-slate-600 text-sm mb-2">In feature branch, prompt AI to scaffold service implementation from <code class="bg-slate-100 px-1 rounded text-pink-600 font-mono text-xs">spec.md</code>.</p>
+<p class="text-slate-500 text-xs italic">"Create service class with methods matching the spec interfaces."</p>
+</div>
+</div>
+<div class="step-item">
+<div class="step-number">2</div>
+<div class="step-content shadow-sm">
+<p class="font-bold text-slate-800 mb-1">Spec-Driven Implementation</p>
+<p class="text-slate-600 text-sm mb-2">Use Kiro / Spec Kit to iterate through <code class="bg-slate-100 px-1 rounded text-pink-600 font-mono text-xs">tasks.md</code> checklist.</p>
+<p class="text-slate-500 text-xs italic">AI generates logic for each task, running tests immediately after.</p>
+</div>
+</div>
+<div class="step-item">
+<div class="step-number">3</div>
+<div class="step-content shadow-sm">
+<p class="font-bold text-slate-800 mb-1">Refactor &amp; Observe</p>
+<p class="text-slate-600 text-sm mb-2">AI suggests refactoring for readability and adds OpenTelemetry metrics.</p>
+<p class="text-slate-500 text-xs italic">Ensures code isn't just functional, but maintainable and observable.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Details -->
+<div class="details-column z-10">
+<!-- Artifacts Produced -->
+<div class="card">
+<h2 class="text-lg font-bold text-slate-800 font-heading mb-4 flex items-center">
+<i class="fa-solid fa-file-code text-purple-500 mr-2"></i> Artifacts Produced
+                    </h2>
+<div class="file-item">
+<i class="fa-brands fa-java file-icon text-red-500"></i>
+<p>SavedSearchService.java <span class="text-slate-400 text-xs ml-2">(Business Logic)</span></p>
+</div>
+<div class="file-item">
+<i class="fa-solid fa-vial file-icon text-green-500"></i>
+<p>SavedSearchServiceTest.java <span class="text-slate-400 text-xs ml-2">(Unit Tests)</span></p>
+</div>
+<div class="file-item">
+<i class="fa-solid fa-chart-line file-icon text-blue-500"></i>
+<p>Metrics.java <span class="text-slate-400 text-xs ml-2">(Telemetry Stubs)</span></p>
+</div>
+</div>
+<!-- Tools Used -->
+<div class="card">
+<h2 class="text-lg font-bold text-slate-800 font-heading mb-4 flex items-center">
+<i class="fa-solid fa-screwdriver-wrench text-indigo-500 mr-2"></i> Tools Stack
+                    </h2>
+<div class="flex flex-wrap">
+<div class="tech-tag border border-indigo-100">
+<i class="fa-solid fa-robot text-indigo-500"></i> GitHub Copilot / Amazon Q
+                        </div>
+<div class="tech-tag border border-pink-100">
+<i class="fa-solid fa-wand-magic-sparkles text-pink-500"></i> Spec Kit / Kiro
+                        </div>
+<div class="tech-tag border border-blue-100">
+<i class="fa-brands fa-git-alt text-orange-500"></i> MCP (Git, Docs)
+                        </div>
+<div class="tech-tag border border-slate-200">
+<i class="fa-solid fa-check-double text-green-600"></i> JUnit / Jest
+                        </div>
+</div>
+</div>
+<!-- Success Criteria -->
+<div class="card flex-1 bg-green-50 border-green-100">
+<h2 class="text-lg font-bold text-green-800 font-heading mb-4 flex items-center">
+<i class="fa-solid fa-flag-checkered text-green-600 mr-2"></i> Success Criteria
+                    </h2>
+<div class="success-item">
+<div class="check-circle"><i class="fa-solid fa-check"></i></div>
+<p class="text-sm text-green-800">All unit tests pass (Green)</p>
+</div>
+<div class="success-item">
+<div class="check-circle"><i class="fa-solid fa-check"></i></div>
+<p class="text-sm text-green-800">Code coverage threshold met (&gt;80%)</p>
+</div>
+<div class="success-item">
+<div class="check-circle"><i class="fa-solid fa-check"></i></div>
+<p class="text-sm text-green-800">Linter &amp; Static Analysis clean</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

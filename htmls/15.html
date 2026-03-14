@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Summary and Next Steps</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Space+Grotesk:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            overflow: hidden;
+        }
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            display: flex;
+            flex-direction: column;
+            background-color: #ffffff;
+            position: relative;
+        }
+        .header {
+            height: 80px;
+            background-color: #0f172a;
+            display: flex;
+            align-items: center;
+            padding: 0 40px;
+            flex-shrink: 0;
+        }
+        .content-area {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            gap: 32px;
+            background-color: #f8fafc; /* Fallback for pattern */
+            position: relative;
+        }
+        
+        /* Card Base Styles */
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 32px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Column Specifics */
+        .col-takeaways {
+            flex: 1.2;
+            border-top: 6px solid #3b82f6;
+        }
+        .col-next-steps {
+            flex: 1.2;
+            border-top: 6px solid #8b5cf6;
+        }
+        .col-cta {
+            flex: 0.9;
+            background-color: #1e293b; /* Slate 800 */
+            color: white;
+            border-top: 6px solid #10b981;
+        }
+        
+        /* Icons */
+        .icon-box {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            font-size: 1.25rem;
+        }
+        
+        /* List Items */
+        .list-item {
+            display: flex;
+            margin-bottom: 20px;
+            align-items: flex-start;
+        }
+        .list-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        /* Checklist Styles */
+        .check-icon {
+            color: #3b82f6;
+            background-color: #eff6ff;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            margin-right: 16px;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+        
+        /* Numbered Steps Styles */
+        .step-number {
+            background-color: #f3e8ff;
+            color: #7c3aed;
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-right: 16px;
+            margin-top: 2px;
+            flex-shrink: 0;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* CTA Button */
+        .cta-button {
+            background-color: #3b82f6;
+            color: white;
+            padding: 14px 24px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+        }
+        
+        /* Decorative Background Pattern (SVG) */
+        .bg-dots {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23cbd5e1' fill-opacity='0.4' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='1'/%3E%3C/g%3E%3C/svg%3E");
+            z-index: 0;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+<div class="slide-container">
+<!-- Header -->
+<div class="header">
+<h1 class="text-white text-3xl font-bold font-heading tracking-wide">Summary and Next Steps</h1>
+<div class="ml-auto text-slate-400 text-sm font-medium flex items-center">
+<i class="fa-solid fa-flag-checkered mr-2"></i>
+<span>Conclusion</span>
+</div>
+</div>
+<!-- Content Area -->
+<div class="content-area">
+<div class="bg-dots"></div>
+<!-- Column 1: Key Takeaways -->
+<div class="card col-takeaways z-10">
+<div class="icon-box bg-blue-50 text-blue-600">
+<i class="fa-solid fa-lightbulb"></i>
+</div>
+<h2 class="text-2xl font-bold text-slate-800 mb-6 font-heading">Key Takeaways</h2>
+<div class="list-item">
+<div class="check-icon"><i class="fa-solid fa-check"></i></div>
+<div>
+<p class="font-bold text-slate-800 text-lg mb-1">Augmented SDLC</p>
+<p class="text-slate-500 text-sm leading-relaxed">AI transforms every phase when connected to organizational context via MCP, moving beyond simple code completion.</p>
+</div>
+</div>
+<div class="list-item">
+<div class="check-icon"><i class="fa-solid fa-check"></i></div>
+<div>
+<p class="font-bold text-slate-800 text-lg mb-1">Spec-Driven Quality</p>
+<p class="text-slate-500 text-sm leading-relaxed">Shifting from "Spec-First" to "Spec-Anchored" ensures continuous traceability and prevents documentation drift.</p>
+</div>
+</div>
+<div class="list-item">
+<div class="check-icon"><i class="fa-solid fa-check"></i></div>
+<div>
+<p class="font-bold text-slate-800 text-lg mb-1">Human in the Loop</p>
+<p class="text-slate-500 text-sm leading-relaxed">Automated workflows require strong governance, security reviews, and strategic oversight to remain effective.</p>
+</div>
+</div>
+</div>
+<!-- Column 2: Implementation Roadmap -->
+<div class="card col-next-steps z-10">
+<div class="icon-box bg-purple-50 text-purple-600">
+<i class="fa-solid fa-stairs"></i>
+</div>
+<h2 class="text-2xl font-bold text-slate-800 mb-6 font-heading">Next Steps</h2>
+<div class="list-item">
+<div class="step-number">1</div>
+<div>
+<p class="font-bold text-slate-800 text-lg mb-1">Define Foundation</p>
+<p class="text-slate-500 text-sm leading-relaxed">Establish your "Memory Bank" and constitutional rules for AI agents.</p>
+</div>
+</div>
+<div class="list-item">
+<div class="step-number">2</div>
+<div>
+<p class="font-bold text-slate-800 text-lg mb-1">Pilot Workflows</p>
+<p class="text-slate-500 text-sm leading-relaxed">Select 2-3 key flows (e.g., Planning + Testing) and enable MCP context connections.</p>
+</div>
+</div>
+<div class="list-item">
+<div class="step-number">3</div>
+<div>
+<p class="font-bold text-slate-800 text-lg mb-1">Measure &amp; Scale</p>
+<p class="text-slate-500 text-sm leading-relaxed">Track lead time &amp; MTTR improvements. Scale adoption with access guardrails.</p>
+</div>
+</div>
+</div>
+<!-- Column 3: Call to Action -->
+<div class="card col-cta z-10">
+<div class="icon-box bg-slate-700 text-green-400">
+<i class="fa-solid fa-rocket"></i>
+</div>
+<h2 class="text-2xl font-bold text-white mb-4 font-heading">Ready to Start?</h2>
+<p class="text-slate-300 mb-8 leading-relaxed">
+                    Don't just generate code—generate value with context-aware AI. Transform your development lifecycle today.
+                </p>
+<div class="bg-slate-800 p-5 rounded-lg border border-slate-600 mb-auto">
+<p class="text-green-400 font-mono text-xs mb-2 uppercase tracking-wider font-bold">
+<i class="fa-solid fa-terminal mr-2"></i>Immediate Action
+                    </p>
+<p class="text-white text-sm leading-relaxed">
+                        Choose a pilot repository, set up MCP connectors, and run the 'Brief to Spec' demo path.
+                    </p>
+</div>
+<div class="cta-button">
+<p>Launch Pilot Program <i class="fa-solid fa-arrow-right ml-2"></i></p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

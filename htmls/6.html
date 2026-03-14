@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Testing - Phase Detail</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Space+Grotesk:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            display: flex;
+            flex-direction: column;
+            background-color: #ffffff;
+            overflow: hidden;
+            position: relative;
+        }
+        /* Header */
+        .header {
+            background-color: #0f172a;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            padding: 0 40px;
+            position: relative;
+            z-index: 10;
+        }
+        .phase-badge {
+            background-color: #3b82f6;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-right: 16px;
+        }
+        
+        /* Grid Layout */
+        .content-grid {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 24px;
+            padding: 32px 40px;
+            background-color: #f1f5f9;
+        }
+        
+        /* Quadrant Cards */
+        .quadrant-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border-top: 4px solid transparent;
+            height: 100%;
+        }
+        
+        /* Card Headers */
+        .card-header {
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .header-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-size: 1rem;
+        }
+        
+        /* Card Content */
+        .card-content {
+            padding: 20px 24px;
+            flex: 1;
+        }
+        .list-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            color: #475569;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        .list-bullet {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            margin-top: 8px;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        
+        /* Specific Styles for Each Quadrant */
+        /* Use Cases - Blue */
+        .q-use-cases { border-top-color: #3b82f6; }
+        .q-use-cases .header-icon { background-color: #eff6ff; color: #2563eb; }
+        .q-use-cases .list-bullet { background-color: #3b82f6; }
+        
+        /* Tools - Purple */
+        .q-tools { border-top-color: #8b5cf6; }
+        .q-tools .header-icon { background-color: #f5f3ff; color: #7c3aed; }
+        .q-tools .list-bullet { background-color: #8b5cf6; }
+        .tool-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            background-color: #f5f3ff;
+            color: #6d28d9;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            border: 1px solid #ddd6fe;
+        }
+        
+        /* Outcomes - Green */
+        .q-outcomes { border-top-color: #10b981; }
+        .q-outcomes .header-icon { background-color: #ecfdf5; color: #059669; }
+        .q-outcomes .list-bullet { background-color: #10b981; }
+        
+        /* Challenges - Amber */
+        .q-challenges { border-top-color: #f59e0b; }
+        .q-challenges .header-icon { background-color: #fffbeb; color: #d97706; }
+        .q-challenges .list-bullet { background-color: #f59e0b; }
+
+        /* Subtle background pattern */
+        .bg-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 24px 24px;
+            opacity: 0.4;
+            z-index: 0;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+<div class="slide-container">
+<!-- Header -->
+<div class="header">
+<span class="phase-badge">Phase 4</span>
+<h1 class="text-white text-3xl font-bold font-heading tracking-wide">
+                Testing
+            </h1>
+<div class="ml-auto text-slate-400 text-sm font-medium flex items-center">
+<i class="fa-solid fa-layer-group mr-2"></i>
+<span>SDLC Phase Detail</span>
+</div>
+</div>
+<!-- Main Content Grid -->
+<div class="content-grid relative">
+<div class="bg-pattern"></div>
+<!-- Quadrant 1: Use Cases -->
+<div class="quadrant-card q-use-cases z-10">
+<div class="card-header">
+<div class="header-icon">
+<i class="fa-solid fa-list-check"></i>
+</div>
+<h2 class="text-xl font-bold text-slate-800 font-heading">Use Cases</h2>
+</div>
+<div class="card-content">
+<div class="list-item">
+<div class="list-bullet"></div>
+<p>Generate unit, integration, and E2E tests directly from specifications and implementation code.</p>
+</div>
+<div class="list-item">
+<div class="list-bullet"></div>
+<p>Implement self-healing locators for UI tests to drastically reduce maintenance overhead.</p>
+</div>
+<div class="list-item">
+<div class="list-bullet"></div>
+<p>Synthesize realistic test data and complex edge case scenarios using generative models.</p>
+</div>
+</div>
+</div>
+<!-- Quadrant 2: Tools Used -->
+<div class="quadrant-card q-tools z-10">
+<div class="card-header">
+<div class="header-icon">
+<i class="fa-solid fa-screwdriver-wrench"></i>
+</div>
+<h2 class="text-xl font-bold text-slate-800 font-heading">Tools Used</h2>
+</div>
+<div class="card-content">
+<div class="mb-4">
+<p class="text-sm text-slate-500 font-semibold mb-2 uppercase tracking-wide">Automation &amp; Locators</p>
+<div class="flex flex-wrap">
+<span class="tool-badge">Playwright + AI</span>
+<span class="tool-badge">Cypress</span>
+<span class="tool-badge">Jest/Pytest Gen</span>
+</div>
+</div>
+<div class="mb-4">
+<p class="text-sm text-slate-500 font-semibold mb-2 uppercase tracking-wide">Planning &amp; Visual</p>
+<div class="flex flex-wrap">
+<span class="tool-badge">LLM Test Planners</span>
+<span class="tool-badge">Visual AI (Applitools)</span>
+</div>
+</div>
+<div>
+<p class="text-sm text-slate-500 font-semibold mb-2 uppercase tracking-wide">Context Bridge</p>
+<div class="flex flex-wrap">
+<span class="tool-badge">MCP (Fixtures, Schemas, Logs)</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Quadrant 3: Outcomes -->
+<div class="quadrant-card q-outcomes z-10">
+<div class="card-header">
+<div class="header-icon">
+<i class="fa-solid fa-chart-line"></i>
+</div>
+<h2 class="text-xl font-bold text-slate-800 font-heading">Key Outcomes</h2>
+</div>
+<div class="card-content">
+<div class="list-item">
+<div class="list-bullet"></div>
+<p><strong>Broader Coverage:</strong> Rapid generation of diverse edge cases that humans often overlook.</p>
+</div>
+<div class="list-item">
+<div class="list-bullet"></div>
+<p><strong>Early Detection:</strong> "Shift-left" testing catches logic defects immediately after code generation.</p>
+</div>
+<div class="list-item">
+<div class="list-bullet"></div>
+<p><strong>Faster Triage:</strong> AI analysis correlates failure logs to code changes for instant root cause hints.</p>
+</div>
+</div>
+</div>
+<!-- Quadrant 4: Challenges & Constraints -->
+<div class="quadrant-card q-challenges z-10">
+<div class="card-header">
+<div class="header-icon">
+<i class="fa-solid fa-triangle-exclamation"></i>
+</div>
+<h2 class="text-xl font-bold text-slate-800 font-heading">Challenges &amp; Constraints</h2>
+</div>
+<div class="card-content">
+<div class="list-item">
+<div class="list-bullet"></div>
+<p><strong>Flaky Tests:</strong> AI-generated tests may lack robustness against timing issues or environmental variances.</p>
+</div>
+<div class="list-item">
+<div class="list-bullet"></div>
+<p><strong>Environment Drift:</strong> Maintaining alignment between generated test assumptions and actual environments.</p>
+</div>
+<div class="list-item">
+<div class="list-bullet"></div>
+<p><strong>Data Security:</strong> Safely exposing production log patterns to AI without leaking PII.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
